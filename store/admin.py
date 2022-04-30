@@ -1,8 +1,16 @@
-import imp
 from django.contrib import admin
+from .models import Category, Product
 
-# Register your models here.
-from .models import *
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepoulated_fields ={'slug' :('name',)}
 
-admin.site.register(Customer)
-admin.site.register(Product)
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'slug', 'price', 
+                'in_stock', 'created', 'updated']
+    list_filter = ['in_stock', 'is_active']
+    list_editable = ['price', 'in_stock']
+    prepoulated_fields ={'slug' :('title',)}
